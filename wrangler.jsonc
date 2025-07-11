@@ -7,10 +7,10 @@
 	"name": "quotes-market",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-07-08",
-	"assets": {
-		"binding": "ASSETS",
-		"directory": "./public"
-	},
+	// "assets": {
+	// 	"binding": "ASSETS",
+	// 	"directory": "./public"
+	// },
 	"observability": {
 		"enabled": true
 	},
