@@ -19,7 +19,10 @@ app.use('*', rateLimit({
   limit: 10,
   message: JSON.stringify({
     status: false,
-    data: null,
+    data: {
+      quote: "All things come to those who wait.",
+      category: "Patience"
+    },
     error: 'Too many requests. Please try again later.'
   }),
   statusCode: 429
