@@ -5,4 +5,4 @@ command = "npm run build"
 bucket = "./public"
 
 [[assets]]
-include = ["src/quotes.json"]
+include = ["src/quotes/*"]
