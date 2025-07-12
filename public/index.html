@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quotes Market</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            transition: background 0.5s;
+        }
+
+        .main-title {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 32px;
+            color: #22223b;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 16px #fff8, 0 1px 0 #fff;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .dropdown {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1.5px solid #d1d5db;
+            font-size: 1rem;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.7);
+            color: #22223b;
+            font-weight: 500;
+            box-shadow: 0 2px 8px #4f8cff11;
+            outline: none;
+            transition: border 0.2s;
+            min-width: 140px;
+            cursor: pointer;
+        }
+
+        .dropdown:focus {
+            border: 1.5px solid #4f8cff;
+        }
+
+        .quote-card {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            padding: 40px 32px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 32px;
+            animation: fadeIn 0.7s cubic-bezier(.4, 2, .6, 1) 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quote-icon {
+            font-size: 3.5rem;
+            color: #4f8cff;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 2px 8px #4f8cff33);
+            user-select: none;
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #22223b;
+            text-align: center;
+            margin-bottom: 18px;
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+            min-height: 60px;
+            transition: color 0.2s;
+        }
+
+        .category {
+            color: #4f8cff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            letter-spacing: 0.04em;
+            text-shadow: 0 1px 8px #4f8cff11;
+        }
+
+        .language {
+            color: #adb5bd;
+            font-size: 0.98rem;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 38px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 16px #4f8cff22;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 8px;
+            letter-spacing: 0.04em;
+        }
+
+        .refresh-btn:hover,
+        .refresh-btn:focus {
+            background: linear-gradient(90deg, #38b6ff 0%, #4f8cff 100%);
+            transform: translateY(-2px) scale(1.04);
+            outline: none;
+        }
+
+        @media (max-width: 600px) {
+            .main-title {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .quote-card {
+                padding: 24px 8vw 24px 8vw;
+                margin-bottom: 20px;
+            }
+
+            .quote {
+                font-size: 1.1rem;
+                min-height: 40px;
+            }
+
+            .refresh-btn {
+                font-size: 1rem;
+                padding: 12px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-title">🌟 Quotes Market</div>
+    <div class="controls">
+        <select id="languageSelect" class="dropdown">
+            <option value="">Language (Any)</option>
+        </select>
+        <select id="categorySelect" class="dropdown">
+            <option value="">Category (Any)</option>
+        </select>
+    </div>
+    <div class="quote-card">
+        <div class="quote-icon">&#10077;</div>
+        <div id="quote" class="quote">Loading...</div>
+        <div id="category" class="category"></div>
+        <div id="language" class="language"></div>
+    </div>
+    <button id="refreshBtn" class="refresh-btn" type="button">Refresh Quote</button>
+    <footer class="footer">
+        <a href="https://github.com/varundeva/quotes-market" target="_blank" rel="noopener" class="footer-link">
+            <svg height="20" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;margin-right:6px;">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z">
+                </path>
+            </svg>
+            View on GitHub
+        </a>
+    </footer>
+    <style>
+        .footer {
+            width: 100%;
+            text-align: center;
+            margin-top: 32px;
+            margin-bottom: 18px;
+            color: #4f8cff;
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.85;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .footer-link {
+            color: #4f8cff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #22223b;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .footer {
+                font-size: 0.95rem;
+                margin-top: 18px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script>
+        let languages = [];
+        let categories = [];
+        const languageSelect = document.getElementById('languageSelect');
+        const categorySelect = document.getElementById('categorySelect');
+
+        async function fetchLanguages() {
+            const res = await fetch('/languages');
+            const data = await res.json();
+            if (data.status && Array.isArray(data.data)) {
+                languages = data.data;
+                languageSelect.innerHTML = '<option value="">Language (Any)</option>' +
+                    languages.map(lang => `<option value="${lang}">${lang.charAt(0).toUpperCase() + lang.slice(1)}</option>`).join('');
+            }
+        }
+
+        async function fetchCategories(language) {
+            if (!language) {
+                categorySelect.innerHTML = '<option value="">Category (Any)</option>';
+                categories = [];
+                return;
+            }
+            const res = await fetch(`/categories/${language}`);
+            const data = await res.json();
+            if (data.status && Array.isArray(data.data)) {
+                categories = data.data;
+                categorySelect.innerHTML = '<option value="">Category (Any)</option>' +
+                    categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+            }
+        }
+
+        async function fetchQuote() {
+            document.getElementById('quote').textContent = 'Loading...';
+            document.getElementById('category').textContent = '';
+            document.getElementById('language').textContent = '';
+            const language = languageSelect.value;
+            const category = categorySelect.value;
+            let url = '/quote';
+            if (language && category) {
+                url = `/quote/${language}/${encodeURIComponent(category)}`;
+            } else if (language) {
+                url = `/quote/${language}`;
+            }
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data.status && data.data) {
+                    document.getElementById('quote').textContent = '“' + data.data.quote + '”';
+                    document.getElementById('category').textContent = data.data.category;
+                    document.getElementById('language').textContent = data.data.language;
+                } else {
+                    document.getElementById('quote').textContent = 'No quote found.';
+                }
+            } catch (e) {
+                document.getElementById('quote').textContent = 'Failed to fetch quote.';
+            }
+        }
+
+        languageSelect.addEventListener('change', async () => {
+            await fetchCategories(languageSelect.value);
+            categorySelect.value = '';
+            fetchQuote();
+        });
+        categorySelect.addEventListener('change', fetchQuote);
+        document.getElementById('refreshBtn').addEventListener('click', fetchQuote);
+        window.addEventListener('DOMContentLoaded', async () => {
+            await fetchLanguages();
+            await fetchCategories('');
+            fetchQuote();
+        });
+    </script>
+</body>
+
+</html>
