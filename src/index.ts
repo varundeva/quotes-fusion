@@ -2,9 +2,10 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import rateLimit from 'hono-rate-limit'
 
-type Quote = {
+export type Quote = {
   quote: string
   category: string
+  language: string
 }
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
