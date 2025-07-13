@@ -1,4 +1,4 @@
-# Quotes Market API
+# Quotes Fusion API
 
 A simple, open-source API for retrieving inspirational quotes in multiple languages and categories. Built with [Hono](https://hono.dev/) and TypeScript, designed for serverless/edge environments (e.g., Cloudflare Workers).
 
@@ -17,8 +17,8 @@ A simple, open-source API for retrieving inspirational quotes in multiple langua
 ### Installation
 ```bash
 # Clone the repository
-$ git clone https://github.com/your-username/quotes-market.git
-$ cd quotes-market
+$ git clone https://github.com/your-username/quotes-fusion.git
+$ cd quotes-fusion
 
 # Install dependencies
 $ npm install

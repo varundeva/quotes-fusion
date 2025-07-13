@@ -1,5 +1,5 @@
 {
-	"name": "quotes-market",
+	"name": "quotes-fusion",
 	"scripts": {
 		"dev": "wrangler dev",
 		"deploy": "wrangler deploy --minify",

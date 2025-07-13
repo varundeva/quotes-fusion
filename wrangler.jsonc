@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "quotes-market",
+	"name": "quotes-fusion",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-07-08",
 	"assets": {
